@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <title>Log In</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          body{
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+          }
+input {
+  font-size: 100%;
+  padding: 0.8em;
+  outline: none;
+  border: 2px solid rgb(200, 200, 200);
+  background-color: transparent;
+  border-radius: 20px;
+  width: 80%;
+}
+
+button {
+ color: #090909;
+ padding: 0.7em 1.7em;
+ font-size: 18px;
+ border-radius: 0.5em;
+ background: #41466a;
+ border: 1px solid #e8e8e8;
+ transition: all .3s;
+ box-shadow: 6px 6px 12px #c5c5c5,
+             -6px -6px 12px #ffffff;
+margin-left: 25%;
+width: 50%;
+color: white;
+}
+.inp{
+  margin-top: -10%;
+  margin-left: 15%;
+}
+#title{
+  margin-left: 35%;
+  margin-top: 10%;
+}
+.hi{
+        color: #090909;
+    padding: 3.1em 1.7em;
+    margin-left: 4%;
+    max-width: 80%;
+    color: white;
+  
+}
+
+        </style>
+    </head>
+    <body>
+        <div id="title">
+           <h1>Log in</h1>
+        </div>
+        <img src="wallet.png" class="hi">
+        <div class="inp">
+          <input type="text" required="" placeholder="Enter Email id" id="email" autocomplete="off"><br><br>
+        <input type="text" required="" id="password" placeholder="Enter Password" autocomplete="off"><br><br>
+    </div>
+  </div>
+            <button id='log'>Log in</button>
+
+<script type="module">
+    const firebaseConfig = {
+        apiKey: "AIzaSyBaLdcoeVZYBOGXwE3OaWknh1lbhp9_IS0",
+        authDomain: "walletdigitalcoin.firebaseapp.com",
+        databaseURL: "https://walletdigitalcoin-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "walletdigitalcoin",
+        storageBucket: "walletdigitalcoin.appspot.com",
+        messagingSenderId: "797876183390",
+        appId: "1:797876183390:web:c8bb2345533b200059efcf",
+        measurementId: "G-1GE4VP57XD"
+    };
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword,onAuthStateChanged,signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+    const app = initializeApp(firebaseConfig);
+    // Initialize Firebase
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    alert(user.displayName);
+    window.location='home.html';    
+  }
+});
+function login(){
+  var userEmail = document.getElementById("email").value;
+  var userPass = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, userEmail, userPass).
+  then((userCredential)=>{
+}).
+catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+
+    window.alert("Error : " + errorMessage);
+
+    // ...
+  });
+
+}
+log.addEventListener('click',login);
+  </script>
+    </body>
+</html>

@@ -1,0 +1,185 @@
+<html>
+    <head>
+        <title>Log In</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            *{
+                padding: 0;
+            margin: 0;
+            }
+            #transactions{
+                padding: 10px;
+                border-radius:3%;
+                width: 90%;
+                margin-left: 2%;
+                color: white;
+                background-color: black;
+            }
+            a{
+                text-decoration: none;
+                color: white;
+            }
+            body{
+              padding-bottom: 15%;
+            }
+            .appBottomMenu{
+                background-color:rgb(32, 29, 43);
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+            }
+            
+            .appBottomMenu a{
+                float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  margin-left: 7%;
+            }
+            .box1{
+                float:left;
+                width: 33.33%;
+                padding: 10px;
+                padding-left: 1em;
+                margin-top: 3%;
+
+            }
+            #box2{
+                float:left;
+                width: 33.33%;
+                padding: 10px;
+                margin-top: 3%;
+            }
+            #box3{
+                float:left;
+                width: 33.33%;
+                padding: 10px;
+                margin-top: 3%;
+                text-align: center;
+            }
+            #tnx{
+                content: "";
+                clear:both;
+                display: flex;
+            }
+            .bhanu{
+                padding: 2em;
+            }
+
+        </style>
+    </head>
+    <body>
+        <center><h1>Transactions</h1></center><br><br>
+        <div id="bhanu">
+        </div>
+    <div class="appBottomMenu">
+        <a href="home.html" class="item active">
+            <div class="col">
+                <img src="settings-icon.png" height="30px" width="30px">
+            </div>
+        </a>
+        <a href="shop.html" class="item">
+            <div class="col">
+                <img src="settings-icon.png" height="30px" width="30px">
+            </div>
+        </a>
+        <a href="Trans.html" class="item">
+            <div class="col"><img src="settings-icon.png" height="30px" width="30px">
+            </div>
+        </a>
+        <a href="setting.html" class="item">
+            <div class="col"><img src="settings-icon.png" height="30px" width="30px">
+            </div>
+        </a>
+    </div>
+
+    <script type ="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyBaLdcoeVZYBOGXwE3OaWknh1lbhp9_IS0",
+authDomain: "walletdigitalcoin.firebaseapp.com",
+databaseURL: "https://walletdigitalcoin-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "walletdigitalcoin",
+storageBucket: "walletdigitalcoin.appspot.com",
+messagingSenderId: "797876183390",
+appId: "1:797876183390:web:f896a9b4c522e33759efcf",
+measurementId: "G-J42NENRFWP"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        import { getFirestore , setDoc ,addDoc , doc , collection ,getDoc,getDocs,updateDoc,where,query} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+        const db = getFirestore(app);
+const q = query(collection(db, "users","7676859292","Transactions"),where("from", "!=", false));
+const querySnapshot = await getDocs(q);
+var data = [];
+querySnapshot.forEach((doc) => {
+AddItemsToTable(doc.data().from,doc.data().to,doc.data().amount,doc.id);
+});
+        function AddItemsToTable(from,to,amounts,transids){
+                    let lin = document.createElement("a");
+                    let trans = document.createElement("div");
+                    let details = document.createElement("div");
+                    lin.appendChild(details);
+                    let phone = document.createElement("div");
+                    lin.appendChild(phone);
+                    let amount = document.createElement("div");
+                    lin.appendChild(amount);
+                    trans.appendChild(lin);
+                    
+                    lin.id = "tnx";
+                    trans.id = 'transactions';
+                    details.className  = 'box1';
+                    phone.id = 'box2';
+                    amount.id = 'box3';
+                    if(amounts<0){
+                    details.innerHTML = "Send To";
+                    phone.innerHTML = from;
+                    amount.style = "color:red";
+                    amount.innerHTML = "<span>$&nbsp</span>"+amounts+"<span>&nbspDR</span>";
+                    }
+                    else{
+                    details.innerHTML = "Recived From";
+                    phone.innerHTML = to;
+                    amount.style = "color:green";
+                    amount.innerHTML = "<span>$&nbsp</span>"+amounts+"<span>&nbspCR</span>";
+                    }
+                    bhanu.appendChild(trans);
+                    bhanu.appendChild(document.createElement("br"));
+                    bhanu.appendChild(document.createElement("hr"));
+                    bhanu.appendChild(document.createElement("br"));
+                     }  
+                     var stdio = 0;
+                var bh = document.getElementById('bhanu');
+                function AddAllItemsToTable(theStudents){
+                        theStudents.forEach(element=>{
+                            AddItemsToTable(element.from,element.to,element.transid,element.id)
+                        });
+                     }
+                     function GetAllDataOnce(){
+                        const dbRef = ref(db);
+                        
+                        get(child(dbRef,"Users/Transations"))
+                        .then((Snapshot)=>{
+                            var students =[];
+
+                            Snapshot.forEach(childSnapshot=>{
+                                students.push(childSnapshot.val());
+                            });
+                            AddAllItemsToTable(students);
+                        })
+                     }
+                    //  window.onload = GetAllDataOnce;
+        </script>
+    </body>
+    </html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)file:///C:/Users/bhanu/OneDrive/Desktop/final/register.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+      body{
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+          }
+          #login {
+  font-family: 'Segoe UI', sans-serif;
+  margin:11em 0 1em 3em;
+  max-width: 180%;
+  position: relative;
+}
+input {
+  font-size: 100%;
+  padding: 0.8em;
+  outline: none;
+  border: 2px solid rgb(200, 200, 200);
+  background-color: transparent;
+  border-radius: 20px;
+  width: 80%;
+}
+button {
+ color: #090909;
+ padding: 0.7em 1.7em;
+ font-size: 18px;
+ border-radius: 0.5em;
+ background: #41466a;
+ border: 1px solid #e8e8e8;
+ transition: all .3s;
+ box-shadow: 6px 6px 12px #c5c5c5,
+             -6px -6px 12px #ffffff;
+margin-left: 17%;
+width: 50%;
+color: white;
+}
+h1{
+margin-left: 35%;
+  margin-top: 10%;
+}
+    </style>
+<script src="./register_files/cb=gapi.loaded_0" async=""></script><script src="./register_files/api.js.download" type="text/javascript" charset="UTF-8" gapi_processed="true"></script></head>
+<body>
+  <h1>Sign Up</h1>
+    <div id="login">
+        <input type="text" id="uname" placeholder="Username"><br><br>
+        <input type="number" id="number" placeholder="phonenumber"><br><br>
+        <input type="text" id="email" placeholder="Email"><br><br>
+        <input type="number" id="password" placeholder="Enter password"><br><br>
+        <button id="signbtn">Sign Up</button>
+    </div>
+<script type="module">
+    const firebaseConfig = {
+      apiKey: "AIzaSyBaLdcoeVZYBOGXwE3OaWknh1lbhp9_IS0",
+  authDomain: "walletdigitalcoin.firebaseapp.com",
+  databaseURL: "https://walletdigitalcoin-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "walletdigitalcoin",
+  storageBucket: "walletdigitalcoin.appspot.com",
+  messagingSenderId: "797876183390",
+  appId: "1:797876183390:web:c8bb2345533b200059efcf",
+  measurementId: "G-1GE4VP57XD"
+    };
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+    import {getAuth,createUserWithEmailAndPassword,updateProfile,onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+    import { getFirestore, setDoc, addDoc,doc, updateDoc,deleteDoc,collection,query,where,getDocs  } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    var unique = true;
+
+async function signup()
+{
+  
+  var email = document.getElementById("email").value;
+  var pass = document.getElementById("password").value;
+  var pno = document.getElementById('number').value;
+  var username = document.getElementById('uname').value;
+  pno = String(pno);
+  const auth = getAuth();
+  const q = query(collection(db, "users"), where("phonenumber", "==", pno));
+
+const querySnapshot = await getDocs(q);
+querySnapshot.forEach((doc) => {
+  unique = false;
+});
+if(unique){
+ createUserWithEmailAndPassword(auth, email, pass)
+  .then((userCredential) => {
+    updateProfile(auth.currentUser, {
+  displayName: pno
+})
+    setDoc(doc(db, "users", pno), {
+  name: username,
+  phonenumber: pno,
+  wallet: 100,
+})
+addDoc(collection(db, "users",pno,'Transactions'), {
+  from : false
+});
+addDoc(collection(db, "users",pno,'Requests'), {
+  from : false
+});
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    alert("error: "+ errorMessage);
+  });
+}
+else{
+  alert("Account Exits");
+}
+}
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     alert(user.displayName);
+//     window.location='home.html';    
+//   }
+// });
+signbtn.addEventListener('click',signup); 
+</script>
+
+</body>
+</html>

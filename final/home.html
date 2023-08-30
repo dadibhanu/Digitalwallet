@@ -1,0 +1,238 @@
+<html>
+    <head>
+        <title>Log In</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+/>
+
+        <style>
+            *{
+                padding: 0;
+            margin: 0;
+            }
+            body{
+              padding-bottom: 15%;
+             background-color: white;
+             color: black;
+            }
+            #profile{
+                height: 80px;
+                width: 80x;
+                border-radius: 50%;
+            }
+            #topbar{
+                background-color:white;
+                padding: 10px;
+            }
+            #username{
+                margin-top: 30px;
+                margin-left:25%; 
+            }
+            #walletbalance{
+                font-size: 40px;
+                margin-left:3.3em;
+            }
+            .appBottomMenu{
+                background-color:white;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+            }
+            
+            .appBottomMenu a{
+                float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  width: 25%;
+  text-decoration: none;
+  font-size: 17px;
+  margin-bottom: 1em;
+            }
+            .appTopMenu{
+                background-color:white;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 10%;
+            }
+            .appTopMenu a{
+                float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  width: 33%;
+  text-decoration: none;
+  font-size: 17px;
+            }
+            .box1{
+                float:left;
+                width: 33.33%;
+                padding: 10px;
+            }
+            .box2{
+                float:left;
+                width: 33.33%;
+                padding: 10px;
+                padding-left: 15%;
+                margin-top: 3%;
+            }
+            .box3{
+                float:left;
+                width: 33.33%;
+                padding: 10px;
+                padding-left: 20%;
+                margin-top: 3%;
+            }
+            .tnx{
+                content: "";
+                clear:both;
+                display: flex;
+            }
+            #requests{
+                padding: 10px;
+                border-radius:3%;
+                width: 90%;
+                margin-left: 2%;
+                color: white;
+                background-color: black;
+            }
+            a{
+                text-decoration: none;
+            }
+        </style>
+        </head>
+        <body>
+            <div id="topbar">
+                <span><div style="float:left"><img src="profile.png" id="profile"></div><h2><div id="username">Welcome! Bhanu</div></h2></span><br><br>
+                <br><span id="walletbalance">$ ...</span>
+            </div>
+            <div class="appTopMenu">
+                <a href="send.html" class="item active">
+                    <div class="col">
+                        <img src="send.png" height="30em" width="30em">
+                    </div>
+                </a>
+                <a href="recive.html" class="item">
+                    <div class="col">
+                        <img src="down.png" height="30px" width="30px">
+                    </div>
+                </a>
+                <a href="deposit.html" class="item">
+                    <div class="col"><img src="deposit.png" height="30px" width="30px">
+                    </div>
+                </a>
+            </div><br>
+            <h3>Requests</h3>
+            <br><br>
+            <div class="requests">
+                <div id="transactions">
+                    <a href="app-transaction-detail.html" class="tnx">
+                            <div class="image box1"><img src="user.png" alt="img" height="40px" width="40px"></div>
+                            <span class="idnumber box2">
+                                7675859292
+                            </span>
+                        <div class="right box3">
+                             $ 150
+                        </div>
+                    </a>
+                </div><br>
+                <hr>
+                <br>
+                <div id="transactions">
+                    <a href="app-transaction-detail.html" class="tnx">
+                            <div class="image box1"><img src="user.png" alt="img" height="40px" width="40px"></div>
+                            <span class="idnumber box2">
+                                8919037366
+                            </span>
+                        <div class="right box3">
+                              $ 150
+                        </div>
+                    </a>
+                </div><br>
+            </div>
+            <div class="appBottomMenu">
+                <a href="home.html" class="item active">
+                    <div class="col">
+                        <img src="home.png" height="30px" width="30px">
+                    </div>
+                </a>
+                <a href="setting.html" class="item">
+                    <div class="col"><img src="gear.png" height="30px" width="30px">
+                    </div>
+                </a>
+                <a href="Trans.html" class="item">
+                    <div class="col"><img src="history.png" height="30px" width="30px">
+                    </div>
+                </a>
+                <a href="setting.html" class="item">
+                    <div class="col"><img src="gear.png" height="30px" width="30px">
+                    </div>
+                </a>
+            </div>
+            <script type="module">
+                // Import the functions you need from the SDKs you need
+                import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+                import { getAuth, onAuthStateChanged,updateProfile } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+                // TODO: Add SDKs for Firebase products that you want to use
+                // https://firebase.google.com/docs/web/setup#available-libraries
+              
+                // Your web app's Firebase configuration
+                // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+                const firebaseConfig = {
+                  apiKey: "AIzaSyBaLdcoeVZYBOGXwE3OaWknh1lbhp9_IS0",
+  authDomain: "walletdigitalcoin.firebaseapp.com",
+  databaseURL: "https://walletdigitalcoin-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "walletdigitalcoin",
+  storageBucket: "walletdigitalcoin.appspot.com",
+  messagingSenderId: "797876183390",
+  appId: "1:797876183390:web:f896a9b4c522e33759efcf",
+  measurementId: "G-J42NENRFWP"
+                };
+              
+                // Initialize Firebase
+                const app = initializeApp(firebaseConfig);
+                import { doc, getDoc,setDoc,getFirestore,addDoc ,collection,updateDoc,increment} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+                import {getDatabase, ref, get, set,child, update, remove}
+                from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+const auth = getAuth();
+const user = auth.currentUser;
+var uname = ''
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+    uname = user.displayName;
+    const db =getFirestore();
+
+                   var walletbal = document.getElementById("walletbalance");
+                   var username = document.getElementById("username");
+                var urname = "" 
+                var dref = doc(db,'users',uname);
+                
+                const docSnap = await getDoc(dref);
+
+                if(docSnap.exists()){
+                    var a = docSnap.data()
+                    urname = a.name;
+                    walletbal.innerHTML = "$ "+a.wallet;
+                    username.innerHTML= uname;
+                }
+                else{
+                    alert(0);
+                }
+  }
+  else{
+    window.location='login.html';  
+  }
+});
+
+                
+                
+                </script>
+        </body>
+</html>

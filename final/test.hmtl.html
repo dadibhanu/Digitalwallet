@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Ranasthalam
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <style>label{display:inline-block; width:200px }
+        input,select{width: 200px;}
+        button{width: 75px;}
+        h1{
+    font-family: 'poppins',sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    
+}
+body{
+    background-color: lightblue;
+}
+div{
+    font-family: 'poppins',sans-serif;
+    align-items: center;
+    font-style: italic;
+    width: 400px;
+    background-color: aliceblue;
+    padding: 30px;
+    margin: auto;
+    margin-top: 50px;
+   
+    border-radius: 25px;
+    
+    
+}
+        </style>
+    </head>
+    <body >
+        <h1 class="sub ">
+            Ranasthalam
+        </h1>
+        <div>
+            <h2><center> Billing Form</center></h2>
+            <div id="bhanu">
+        <label>product name </label>
+        <input id="Name" type="text">
+        <br><br>
+        <label>Quantity</label>
+        <input id="quantity" type="number"><br><br>
+        <label>Amount</label><input id="amount" type="number"><br><br>
+        <label>Address </label>
+        <input id="address" type="text">
+        <br><br>
+        <button id="insbtn"> Insert</button>
+        <button id="delbtn"> Delete </button>
+        <button id="selbtn"> select</button>
+        </div>
+    </div>
+    
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+          
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+              apiKey: "AIzaSyA3Y92nQr6pN85PUYfEFoCnXzo5S2Fo-Oo",
+              authDomain: "nalal-b5d6f.firebaseapp.com",
+              projectId: "nalal-b5d6f",
+              storageBucket: "nalal-b5d6f.appspot.com",
+              messagingSenderId: "603595596151",
+              appId: "1:603595596151:web:ada1ce5d24c71df236c172",
+              measurementId: "G-0SRR0JJ6Y6"
+            };
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+
+            import{getDatabase,ref,get,set,child,update,remove}
+            from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+
+            const db = getDatabase();
+//-----reference---//
+            var Name = document.getElementById("Name");
+            var quantity = document.getElementById("quantity");
+            var  amount = document.getElementById("amount");
+            var address = document.getElementById("address");
+            var insBtn = document.getElementById("insbtn");
+            var delBtn = document.getElementById("delbtn");
+            var selBtn = document.getElementById("selbtn");
+
+
+            //----insertion data---//
+            function InsertData(){
+                set(ref(db,"Thecustom/"+ Name.value),{
+                    Nameofcust: Name.value,
+                    quantity: quantity.value,
+                    Amount: amount.value,
+                    Address: address.value,
+                })
+                .then(()=>{
+                    alert("data stored ");
+                })
+                .catch((error)=>{
+                    alert("Not stored"+error);
+                });
+            }
+            //---select data---//
+            function SelectData(){
+                const dbref = ref(db);
+                
+                get(child(dbref,"Thecustom/"+ Name.value)).then((snapshot)=>{
+                    if (snapshot.exists()){
+                        quantity.value = snapshot.val().quantity;
+                        amount.value = snapshot.val().Amount;
+                        address.value = snapshot.val().Address;
+                        
+                    }
+                    else{
+                        alert("No data found");
+
+                    }
+                })
+                .catch((error)=>{
+                    alert("unsuccessful,error"+error);
+                });
+            }
+            ///-------  delete data---///
+            function DeleteData(){
+                remove(ref(db,"Thecustom/"+ Name.value)).then(()=>{
+                    alert("data delete");
+                })
+                .catch((error)=>{
+                    alert("unsuccessful"+error);
+                });
+            }
+            //----assign event---//
+            insbtn.addEventListener('click',InsertData);
+            selbtn.addEventListener('click',SelectData);
+            delbtn.addEventListener('click',DeleteData);
+          </script>
+        
+
+    </body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            yoo
+        </title>
+    </head>
+        <body>
+            <label>phonenumber</label><input id="phonenumber" type="text"><br><br>
+            <label>user id</label><input id="userid" type="text"><br><br>
+            <label>wallet</label><input id="wallet" type="number"><br><br>
+            <label>username</label><input id="username" type="text">
+            <hr>
+            <button id="ins">insert</button>
+            <button id="ups">update</button>
+            <button id="sels">select</button>
+            <button id="dels">delete</button>
+
+
+            <script type="module">
+                // Import the functions you need from the SDKs you need
+                import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+                // TODO: Add SDKs for Firebase products that you want to use
+                // https://firebase.google.com/docs/web/setup#available-libraries
+              
+                // Your web app's Firebase configuration
+                // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+                const firebaseConfig = {
+                  apiKey: "AIzaSyBaLdcoeVZYBOGXwE3OaWknh1lbhp9_IS0",
+  authDomain: "walletdigitalcoin.firebaseapp.com",
+  databaseURL: "https://walletdigitalcoin-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "walletdigitalcoin",
+  storageBucket: "walletdigitalcoin.appspot.com",
+  messagingSenderId: "797876183390",
+  appId: "1:797876183390:web:f896a9b4c522e33759efcf",
+  measurementId: "G-J42NENRFWP"
+                };
+              
+                // Initialize Firebase
+                const app = initializeApp(firebaseConfig);
+                import {getDatabase, ref, get, set,child, update, remove}
+                from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+                const db =getDatabase();
+                //refer
+                var phonenumber = document.getElementById("phonenumber");
+                var wallet = document.getElementById("wallet");
+                var uid = document.getElementById("userid");
+                var uname = document.getElementById("username");    
+
+                var ins = document.getElementById("ins");
+                var ups = document.getElementById("ups");
+                var sels = document.getElementById("sels");
+                var dels = document.getElementById("dels");
+
+                //insert
+                function InsertData(){
+                    set(ref(db,"Users/Transations/"+phonenumber.value),{
+                        transid:phonenumber.value,
+                        from:wallet.value,
+                        to:userid.value,
+                        id:uname.value
+                    })
+                    .then(()=>{
+                        alert("thanks");
+                    })
+                    .catch((error)=>{
+                        alert("try again"+error);
+                    });
+                }
+                //select 
+                function SelectData(){
+                    const dbref = ref(db);
+                    get(child(dbref,"theStudents/"+namebox.value)).then((snapshot)=>{
+                        if(snapshot.exists()){
+                            namebox.value = snapshot.val().NameOfstd;
+                            emailbox.value = snapshot.val().gmail;
+                            genbox.value = snapshot.val().gender;
+                            passbox.value = snapshot.val().Stdpassword;
+                    
+                        }
+                        else{
+                            alert("not found");
+                        }
+                    })
+                    .catch((error)=>{
+                        alert("wrong,error"+error);
+                    });
+                }
+                //update
+                function Update(){
+                    update(ref(db,"theStudents/"+namebox.value),{
+                        gender:genbox.value,
+                      
+                        Stdpassword:passbox.value
+                    })
+                    .then(()=>{
+                        alert("okay okay");
+                    })
+                    .catch((error)=>{
+                        alert("try again"+error);
+                    });
+
+                }
+                //delete
+                function DeleteData(){
+                    remove(ref(db,"theStudents/"+namebox.value))
+                    .then(()=>{
+                        alert("Deleted");
+                    })
+                    .catch((error)=>
+                    {
+                        alert("error"+error);
+                    });
+                }
+              //assing 
+                ins.addEventListener('click',InsertData); 
+                sels.addEventListener('click',SelectData);
+                ups.addEventListener('click',Update);
+                dels.addEventListener('click',DeleteData);
+
+
+                </script>
+        </body>
+</html>
